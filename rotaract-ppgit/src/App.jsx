@@ -9,10 +9,12 @@ import Projects from './pages/Projects';
 import Gallery from './pages/Gallery';
 import Join from './pages/Join';
 import Contact from './pages/Contact';
+import NotificationModal from './components/NotificationModal';
 
 const App = () => {
   return (
     <Router>
+      <NotificationModal />
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow">

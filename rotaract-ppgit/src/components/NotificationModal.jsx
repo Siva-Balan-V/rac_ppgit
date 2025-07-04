@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import currentNotification from "../constants/notifications";
+
+const currentNotification = {
+  title: "🚨 Important Update",
+  message: "GRR Installation will be held on July 13, 2025. Join us live at 10 AM!",
+  show: true,
+};
 
 const NotificationModal = () => {
   const [isVisible, setIsVisible] = useState(false);
