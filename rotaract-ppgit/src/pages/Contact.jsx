@@ -2,9 +2,9 @@ import React from "react";
 
 const Contact = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-white px-6 py-10 transition-all duration-500">
+    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-white px-4 sm:px-6 py-10 transition-all duration-500">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-12">Contact Us</h1>
+        <h1 className="text-4xl sm:text-5xl font-bold text-center mb-12">Contact Us</h1>
 
         <div className="grid md:grid-cols-2 gap-12">
           {/* Contact Info */}
@@ -24,48 +24,60 @@ const Contact = () => {
 
             <div>
               <p className="mb-1 font-medium">📧 Email:</p>
-              <p>rotaract.ppgit@gmail.com</p>
+              <p>
+                <a
+                  href="mailto:rotaract.ppgit@gmail.com"
+                  className="hover:underline text-sky-600 dark:text-sky-400"
+                >
+                  rotaract.ppgit@gmail.com
+                </a>
+              </p>
             </div>
 
             <div>
               <p className="mb-1 font-medium">📞 Contact:</p>
-              <p>+91 94862 23189 (Secretary Admin – Sivabalan)</p>
+              <p>
+                <a
+                  href="tel:+919486223189"
+                  className="hover:underline text-sky-600 dark:text-sky-400"
+                >
+                  +91 94862 23189
+                </a>{" "}
+                (Secretary Admin – Sivabalan)
+              </p>
             </div>
           </div>
 
           {/* Contact Form */}
           <form className="space-y-6">
             <div>
-              <label className="block mb-1 font-medium" htmlFor="name">
-                Your Name
-              </label>
+              <label className="block mb-1 font-medium" htmlFor="name">Your Name</label>
               <input
                 id="name"
                 type="text"
+                required
                 className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-sky-500"
                 placeholder="John Doe"
               />
             </div>
 
             <div>
-              <label className="block mb-1 font-medium" htmlFor="email">
-                Your Email
-              </label>
+              <label className="block mb-1 font-medium" htmlFor="email">Your Email</label>
               <input
                 id="email"
                 type="email"
+                required
                 className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-sky-500"
                 placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label className="block mb-1 font-medium" htmlFor="message">
-                Your Message
-              </label>
+              <label className="block mb-1 font-medium" htmlFor="message">Your Message</label>
               <textarea
                 id="message"
                 rows="4"
+                required
                 className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-sky-500"
                 placeholder="Type your message here..."
               />
@@ -80,7 +92,7 @@ const Contact = () => {
           </form>
         </div>
 
-        {/* Google Maps */}
+        {/* Google Map */}
         <div className="mt-16">
           <h2 className="text-2xl font-semibold mb-4">📍 Locate Us</h2>
           <div className="w-full h-64 overflow-hidden rounded-xl border border-gray-300 dark:border-gray-700">

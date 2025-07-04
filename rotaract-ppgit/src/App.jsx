@@ -14,10 +14,17 @@ import NotificationModal from './components/NotificationModal';
 const App = () => {
   return (
     <Router>
+      {/* Global Notification Popup */}
       <NotificationModal />
-      <div className="flex flex-col min-h-screen">
+
+      {/* Full Page Wrapper */}
+      <div className="flex flex-col min-h-screen bg-white text-gray-800 dark:bg-gray-900 dark:text-white transition-colors duration-300">
+
+        {/* Header/Navbar */}
         <Navbar />
-        <main className="flex-grow">
+
+        {/* Main Page Content */}
+        <main className="flex-grow w-full px-4 sm:px-6 md:px-8 py-6">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
@@ -28,6 +35,8 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
+
+        {/* Footer */}
         <Footer />
       </div>
     </Router>

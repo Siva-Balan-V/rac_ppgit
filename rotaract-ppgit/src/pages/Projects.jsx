@@ -47,24 +47,25 @@ const projectList = [
 
 const Projects = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white dark:from-gray-900 dark:to-gray-800 px-6 py-10 text-gray-800 dark:text-white transition-all duration-500">
+    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white px-4 sm:px-6 py-12 transition-all duration-500">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-12">Our Projects</h1>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {projectList.map((project, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 transition hover:scale-105 duration-300"
+              className="bg-white dark:bg-gray-900 rounded-2xl shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 hover:scale-[1.03] transition-transform duration-300"
             >
               <img
                 src={project.image}
                 alt={project.title}
-                className="w-full h-48 object-cover"
+                loading="lazy"
+                className="w-full h-48 object-cover object-center"
               />
-              <div className="p-6">
+              <div className="p-5">
                 <h2 className="text-xl font-semibold mb-2">{project.title}</h2>
-                <p className="text-sm mb-3">{project.description}</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">{project.description}</p>
                 <span
                   className={`inline-block px-3 py-1 text-xs font-semibold rounded-full ${
                     project.type === "Online"
