@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div className="bg-gradient-to-br from-rose-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white transition-colors duration-500">
@@ -11,12 +12,11 @@ const Home = () => {
         <p className="text-base md:text-lg max-w-2xl mb-6">
           Chartered on <strong>16th December 2021</strong> under Rotary International, the Rotaract Club of PPG Institute of Technology is proudly parented by the <strong>Rotary Club of Coimbatore East</strong>. We are part of <strong>Rotaract International District 3206</strong> and operate with Club ID <strong>882398</strong>.
         </p>
-        <a
-          href="/about"
-          className="bg-rose-600 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-rose-700 transition-all"
-        >
-          Learn More About Us
-        </a>
+        <Link to="/about">
+  <button className="px-4 py-2 bg-sky-600 text-white rounded hover:bg-sky-700 transition">
+    Learn About Us
+  </button>
+</Link>
       </section>
 
       <section className="bg-white dark:bg-gray-900 px-6 py-16 border-t border-gray-200 dark:border-gray-700">
