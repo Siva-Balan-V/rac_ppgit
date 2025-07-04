@@ -41,7 +41,7 @@ const Contact = () => {
                   href="tel:+919486223189"
                   className="hover:underline text-sky-600 dark:text-sky-400"
                 >
-                  +91 94862 23189
+                  +91 94862 23181
                 </a>{" "}
                 (Secretary Admin – Sivabalan)
               </p>
