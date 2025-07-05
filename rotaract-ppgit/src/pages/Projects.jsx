@@ -48,8 +48,9 @@ const fallbackProjects = [
 ];
 
 const Projects = () => {
-  const [projects, setProjects] = useState(fallbackProjects)
+  const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -66,21 +67,20 @@ const Projects = () => {
         
         const data = await client.fetch(query)
         
-        if (data && data.length > 0) {
-          // Map Sanity data to our component format
-          const sanityProjects = data.map(project => ({
-            title: project.title,
-            description: project.description,
-            type: project.type || 'Offline',
-            image: project.image ? urlFor(project.image).width(600).height(400).url() : '/projects/default.jpg',
-            date: project.date,
-            status: project.status
-          }))
-          setProjects(sanityProjects)
-        }
+        // Always use Sanity data (even if empty)
+        const sanityProjects = data.map(project => ({
+          title: project.title,
+          description: project.description,
+          type: project.type || 'Offline',
+          image: project.image ? urlFor(project.image).width(600).height(400).url() : '/projects/default.jpg',
+          date: project.date,
+          status: project.status
+        }))
+        setProjects(sanityProjects)
+        
       } catch (error) {
-        console.log('Using fallback projects data:', error)
-        // Keep fallback data if Sanity fails
+        console.error('Error fetching projects:', error)
+        setError('Unable to load projects')
       } finally {
         setLoading(false)
       }
@@ -93,6 +93,35 @@ const Projects = () => {
     return (
       <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600"></div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">{error}</p>
+          <p className="text-gray-600">Please try again later</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (projects.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white px-4 sm:px-6 py-12 transition-all duration-500">
+        <div className="max-w-6xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-12">Our Projects</h1>
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-md">
+            <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
+              No projects have been added yet.
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-500">
+              Please add projects through the admin panel.
+            </p>
+          </div>
+        </div>
       </div>
     )
   }

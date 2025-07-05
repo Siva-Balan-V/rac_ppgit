@@ -27,8 +27,9 @@ const fallbackBoardMembers = [
 ];
 
 const Board = () => {
-  const [boardMembers, setBoardMembers] = useState(fallbackBoardMembers)
+  const [boardMembers, setBoardMembers] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchBoardMembers = async () => {
@@ -44,19 +45,18 @@ const Board = () => {
         
         const data = await client.fetch(query)
         
-        if (data && data.length > 0) {
-          // Map Sanity data to our component format
-          const sanityMembers = data.map(member => ({
-            name: member.name,
-            position: member.position,
-            image: member.image ? urlFor(member.image).width(400).height(400).url() : '/board/default.jpg',
-            bio: member.bio
-          }))
-          setBoardMembers(sanityMembers)
-        }
+        // Always use Sanity data (even if empty)
+        const sanityMembers = data.map(member => ({
+          name: member.name,
+          position: member.position,
+          image: member.image ? urlFor(member.image).width(400).height(400).url() : '/board/default.jpg',
+          bio: member.bio
+        }))
+        setBoardMembers(sanityMembers)
+        
       } catch (error) {
-        console.log('Using fallback board members data:', error)
-        // Keep fallback data if Sanity fails
+        console.error('Error fetching board members:', error)
+        setError('Unable to load board members')
       } finally {
         setLoading(false)
       }
@@ -69,6 +69,35 @@ const Board = () => {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-600"></div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">{error}</p>
+          <p className="text-gray-600">Please try again later</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (boardMembers.length === 0) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-4 sm:px-6 py-16 transition-colors duration-500">
+        <div className="max-w-6xl mx-auto text-center">
+          <h1 className="text-3xl sm:text-4xl font-bold mb-10">Board Members 2025–26</h1>
+          <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-8">
+            <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
+              No board members have been added yet.
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-500">
+              Please add board members through the admin panel.
+            </p>
+          </div>
+        </div>
       </div>
     )
   }

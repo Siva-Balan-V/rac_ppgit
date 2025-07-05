@@ -30,8 +30,9 @@ const fallbackImages = [
 ];
 
 const Gallery = () => {
-  const [images, setImages] = useState(fallbackImages)
+  const [images, setImages] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchGalleryItems = async () => {
@@ -47,21 +48,20 @@ const Gallery = () => {
         
         const data = await client.fetch(query)
         
-        if (data && data.length > 0) {
-          // Map Sanity data to our component format
-          const sanityImages = data.map(item => ({
-            src: item.image ? urlFor(item.image).width(800).height(600).url() : '/images/default.jpg',
-            alt: item.title || item.description || 'Gallery Image',
-            title: item.title,
-            description: item.description,
-            category: item.category,
-            date: item.date
-          }))
-          setImages(sanityImages)
-        }
+        // Always use Sanity data (even if empty)
+        const sanityImages = data.map(item => ({
+          src: item.image ? urlFor(item.image).width(800).height(600).url() : '/images/default.jpg',
+          alt: item.title || item.description || 'Gallery Image',
+          title: item.title,
+          description: item.description,
+          category: item.category,
+          date: item.date
+        }))
+        setImages(sanityImages)
+        
       } catch (error) {
-        console.log('Using fallback gallery data:', error)
-        // Keep fallback data if Sanity fails
+        console.error('Error fetching gallery items:', error)
+        setError('Unable to load gallery items')
       } finally {
         setLoading(false)
       }
@@ -74,6 +74,35 @@ const Gallery = () => {
     return (
       <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600"></div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">{error}</p>
+          <p className="text-gray-600">Please try again later</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (images.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white transition-all duration-500 px-4 sm:px-6 py-12">
+        <div className="max-w-6xl mx-auto text-center">
+          <h1 className="text-4xl sm:text-5xl font-bold mb-12">Our Gallery</h1>
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-md">
+            <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
+              No gallery items have been added yet.
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-500">
+              Please add images through the admin panel.
+            </p>
+          </div>
+        </div>
       </div>
     )
   }
