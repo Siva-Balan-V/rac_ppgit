@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import AdminAuth from './components/AdminAuth';
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -9,6 +10,7 @@ import Projects from './pages/Projects';
 import Gallery from './pages/Gallery';
 import Join from './pages/Join';
 import Contact from './pages/Contact';
+import StudioPage from './pages/StudioPage';
 import NotificationModal from './components/NotificationModal';
 
 const App = () => {
@@ -33,6 +35,14 @@ const App = () => {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/join" element={<Join />} />
             <Route path="/contact" element={<Contact />} />
+            <Route 
+              path="/admin" 
+              element={
+                <AdminAuth>
+                  <StudioPage />
+                </AdminAuth>
+              } 
+            />
           </Routes>
         </main>
 

@@ -26,7 +26,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex space-x-6">
+        <div className="hidden md:flex space-x-6 items-center">
           {navLinks.map((link, index) => (
             <Link
               key={index}
@@ -36,6 +36,13 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
+          <Link
+            to="/admin"
+            className="text-xs text-gray-400 hover:text-rose-600 dark:hover:text-rose-400 transition ml-4"
+            title="Admin Panel"
+          >
+            ⚙️
+          </Link>
         </div>
 
         {/* Mobile Toggle Button */}
@@ -57,6 +64,13 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
+          <Link
+            to="/admin"
+            onClick={() => setIsOpen(false)}
+            className="block text-sm text-gray-400 hover:text-rose-600 dark:hover:text-rose-400 transition mt-4"
+          >
+            ⚙️ Admin
+          </Link>
         </div>
       )}
     </nav>

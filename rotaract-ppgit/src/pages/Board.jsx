@@ -1,4 +1,8 @@
-const boardMembers = [
+import { useState, useEffect } from 'react'
+import { client, urlFor } from '../sanity/client'
+
+// Fallback data in case Sanity is not available
+const fallbackBoardMembers = [
   { name: "Rtr. Anand", position: "Club Advisor & IPP", image: "/board/anand.jpg" },
   { name: "Rtr. Nakshatra", position: "President", image: "/board/nakshatra.jpg" },
   { name: "Rtr. Sivabalan", position: "Secretary – Administration", image: "/board/sivabalan.jpg" },
@@ -23,6 +27,52 @@ const boardMembers = [
 ];
 
 const Board = () => {
+  const [boardMembers, setBoardMembers] = useState(fallbackBoardMembers)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchBoardMembers = async () => {
+      try {
+        const query = `*[_type == "boardMember"] | order(order asc, name asc) {
+          _id,
+          name,
+          position,
+          image,
+          bio,
+          order
+        }`
+        
+        const data = await client.fetch(query)
+        
+        if (data && data.length > 0) {
+          // Map Sanity data to our component format
+          const sanityMembers = data.map(member => ({
+            name: member.name,
+            position: member.position,
+            image: member.image ? urlFor(member.image).width(400).height(400).url() : '/board/default.jpg',
+            bio: member.bio
+          }))
+          setBoardMembers(sanityMembers)
+        }
+      } catch (error) {
+        console.log('Using fallback board members data:', error)
+        // Keep fallback data if Sanity fails
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchBoardMembers()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-600"></div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-4 sm:px-6 py-16 transition-colors duration-500">
       <div className="max-w-6xl mx-auto text-center">
@@ -39,9 +89,16 @@ const Board = () => {
                 alt={member.name}
                 loading="lazy"
                 className="w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover mb-4 border-4 border-rose-300 dark:border-rose-600"
+                onError={(e) => {
+                  // Fallback to a default image if the image fails to load
+                  e.target.src = '/board/default.jpg'
+                }}
               />
               <h3 className="text-lg sm:text-xl font-semibold">{member.name}</h3>
               <p className="text-sm text-gray-700 dark:text-gray-300">{member.position}</p>
+              {member.bio && (
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-2 text-center">{member.bio}</p>
+              )}
             </div>
           ))}
         </div>
