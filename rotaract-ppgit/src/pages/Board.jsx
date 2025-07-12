@@ -10,7 +10,7 @@ const fallbackBoardMembers = [
   { name: "Rtr. Kishore", position: "Sergeant at Arms", image: "/board/kishore.jpg" },
   { name: "Rtr. Nithya Sree", position: "Vice President", image: "/board/nithya.jpg" },
   { name: "Rtr. Kavya", position: "Treasurer", image: "/board/kavya.jpg" },
-  { name: "Rtr. Srikanth", position: "DPP", image: "/board/srikanth.jpg" },
+  { name: "Rtr. Srikanth", position: "District Priority Projects", image: "/board/srikanth.jpg" },
   { name: "Rtr. Susmitha", position: "All Avenue Chair", image: "/board/susmitha.jpg" },
   { name: "Rtr. Nitheesh", position: "Community Service", image: "/board/nitheesh.jpg" },
   { name: "Rtr. Bhavana Sree", position: "Professional Service", image: "/board/bhavana.jpg" },
