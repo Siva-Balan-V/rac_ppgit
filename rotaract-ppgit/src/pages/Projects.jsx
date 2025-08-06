@@ -28,7 +28,7 @@ const fallbackProjects = [
     image: marathon,
   },
   {
-    title: "Rise & Rule",
+    title: "Resume Building",
     description: "Leadership Development Session hosted on Google Meet.",
     type: "Online",
     image: rise,
